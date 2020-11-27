@@ -1,5 +1,6 @@
 /*
-	Author: Hortzy, edited by Nicoman
+	Author: Hortzy
+	Edited by: Nicoman
 	Function: HZ_fnc_OpenSettings
 	Version: 1.0
 	Edited Date: 11/26/2020

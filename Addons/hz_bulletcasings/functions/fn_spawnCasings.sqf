@@ -1,8 +1,9 @@
 /*
-	Author: Hortzy, edited by Nicoman
+	Author: Hortzy
+	Edited by: Nicoman
 	Function: HZ_fnc_spawnCasings
 	Version: 1.0
-	Edited Date: 11/26/2020
+	Edited Date: 11/27/2020
 	
 	Description:
 	Spawns the appropriate casing which is passed from the "firedman" EVH
@@ -21,7 +22,7 @@
 	True if successful
 */
 
-params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_vehicle"];
+params ["_unit", "_weapon", "_ammo", "_projectile", "_vehicle"];
 private _cartridge = toLower getText (configFile >> "CfgAmmo" >> _ammo >> "cartridge");
 if (count _cartridge == 0 || _cartridge find "caseless" != -1) exitWith {};
 private _isInVehicle = (!isNull objectParent _unit);
@@ -90,13 +91,13 @@ private _unitPosition = getPosATLVisual _unit;
 	private _timestamp 	= time;
 	private _date 		= date;
 	
-	if (!HZ_ServerControllingSettings) then {				// Do Local casing
+	if (!HZ_ServerControllingSettings) then {					// Do Local casing
 		private _onTerrain = false;
 		private _offset = 0;
-		if ((_newPos3 select 2) <= 0.001) then {			// On Terrain Surface
+		if ((_newPos3 select 2) <= 0.001) then {				// On Terrain Surface
 			_onTerrain = true;
 			_offset = 0.01125;
-		} else {											//On Object Surface
+		} else {												// On Object Surface
 			_onTerrain = false;
 			_offset = 0.02;
 			if ((_newPos4 select 2) >= 0.00001) then {
@@ -105,30 +106,29 @@ private _unitPosition = getPosATLVisual _unit;
 		};
 		private _casingLocal = createSimpleObject [_cartridgeNew, _newPos2 vectorAdd [0,0,_offset], true];
 		_casingLocal setDir random 360;
-		if (_onTerrain) then {_casingLocal setVectorUp surfaceNormal position _casingLocal} else {_casingLocal setVectorUp [0,0,1];};
+		if (_onTerrain) then {_casingLocal setVectorUp surfaceNormal position _casingLocal} else {_casingLocal setVectorUp [0, 0, 1]};
 		_casing = _casingLocal;
 		_casing setVariable ["CasingDetails", [_ammo, _cartridgeNew, _weapon, _side, _origin, _date, _biometrics], false];
 	};
 	
-	if (HZ_ServerControllingSettings) then {
-		if (isServer) then {		//Do Global casing
-			private _casingGlobal = createVehicle [_cartridgeNew, _newPos3, [], 0, "CAN_COLLIDE"];
-			_casingGlobal allowDamage false;
-			if !(isNull _vehicle) then {
-				_casingGlobal disableCollisionWith _vehicle;
-				[_casingGlobal, _vehicle] remoteExecCall ["disableCollisionWith", 0, _vehicle];
-			};
-			_casingGlobal setVehiclePosition [_newPos3 vectorAdd [0, 0, (0.25 + random 2.5)], [], 0, "CAN_COLLIDE"];
-			_casingGlobal setDir random 360;
-			_casingGlobal setVectorUp [0,0,1];
-			_casing = _casingGlobal;
-			_casing allowDamage false;
-			if !(isNull _vehicle) then {
-				_casing disableCollisionWith _vehicle;		//Triple check to make sure
-				[_casing, _vehicle] remoteExecCall ["disableCollisionWith", 0, _vehicle];
-			};
-			_casing setVariable ["CasingDetails", [_ammo, _cartridgeNew, _weapon, _side, _origin, _date, _biometrics], true];
+	if (HZ_ServerControllingSettings && isServer) then {		// Do Global casing
+		private _casingGlobal = createVehicle [_cartridgeNew, _newPos3, [], 0, "CAN_COLLIDE"];
+		_casingGlobal allowDamage false;
+		if !(isNull _vehicle) then {
+			_casingGlobal disableCollisionWith _vehicle;
+			[_casingGlobal, _vehicle] remoteExecCall ["disableCollisionWith", 0, _vehicle];
 		};
+		_casingGlobal setVehiclePosition [_newPos3 vectorAdd [0, 0, (0.25 + random 2.5)], [], 0, "CAN_COLLIDE"];
+		_casingGlobal setDir random 360;
+		_casingGlobal setVectorUp [0,0,1];
+		_casing = _casingGlobal;
+		_casing allowDamage false;
+		_casing enableSimulationGlobal false;
+		if !(isNull _vehicle) then {
+			_casing disableCollisionWith _vehicle;				// Triple check to make sure
+			[_casing, _vehicle] remoteExecCall ["disableCollisionWith", 0, _vehicle];
+		};
+		_casing setVariable ["CasingDetails", [_ammo, _cartridgeNew, _weapon, _side, _origin, _date, _biometrics], true];
 	};
 	
 	private _cdata = [_casing, _timestamp];

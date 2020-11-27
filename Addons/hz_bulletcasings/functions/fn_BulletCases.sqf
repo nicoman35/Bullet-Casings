@@ -1,8 +1,9 @@
 /*
-	Author: Hortzy, edited by Nicoman
+	Author: Hortzy
+	Edited by: Nicoman
 	Function: HZ_fnc_BulletCases
 	Version: 1.0
-	Edited Date: 11/26/2020
+	Edited Date: 11/27/2020
 	
 	Description:
 	Initializes the Bullet Cassings EventHandlers
@@ -38,7 +39,7 @@ private _ev3 = _unit addEventHandler ["FiredMan", {
 		(HZ_ServerControllingSettings && !isServer) ||
 		(toLower _ammo find "caseless" != -1)
 	) exitWith {};
-	_this call HZ_fnc_spawnCasings;
+	[_unit, _weapon, _ammo, _projectile, _vehicle] call HZ_fnc_spawnCasings;
 }];
 _unit setVariable ["BC_EVH", [_ev1, _ev2, _ev3], false];
 

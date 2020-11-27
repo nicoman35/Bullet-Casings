@@ -1,6 +1,6 @@
 /*
 	Author: Karel Moricky
-	Edited by: Hortzy
+	Edited by: Hortzy, Nicoman
 	Description:
 	Init intel object.
 	It will add "Take" action on it.
@@ -55,9 +55,9 @@ switch _mode do {
 
 		// Call scripted event handlers
 		{
-			[[_x,"intelObjectFound",[_x,_caller,_object]],"bis_fnc_callscriptedeventhandler",_x] call bis_fnc_mp;
+			[[_x, "intelObjectFound", [_x, _caller, _object]], "bis_fnc_callscriptedeventhandler", _x] call bis_fnc_mp;
 		} foreach (objectcurators _object);
-		[_object, "intelObjectFound", [_object,_caller]] call bis_fnc_callscriptedeventhandler;
+		[_object, "intelObjectFound", [_object, _caller]] call bis_fnc_callscriptedeventhandler;
 
 		// Play taking animation and delete the object afterwards
 		_caller playaction "putdown";
