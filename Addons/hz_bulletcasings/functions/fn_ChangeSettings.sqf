@@ -1,46 +1,39 @@
 /*
-	Author: Hortzy
-	Edited by: Nicoman
-	Function: HZ_fnc_ChangeSettings
-	Version: 1.0
-	Edited Date: 11/26/2020
+	Author: 		Hortzy
+	Edited by: 		Nicoman
+	Function: 		HZ_fnc_ChangeSettings
+	Version: 		1.0
+	Edited Date: 	12/10/2020
 	
 	Description:
-	Changes the users settings
-
+		Changes the users settings
+	
 	Parameters:
 		None
-
+	
 	Returns:
-	True if successful
+		True if successful
 */
 
-private _amountEdit = ctrlText ((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5901);
-private _timeEdit	= ctrlText ((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5902);
-private _AI 		= cbChecked ((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5903);
-private _vehicles 	= cbChecked ((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5904);
-private _details 	= cbChecked ((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5905);
-private _simu 		= cbChecked ((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5906);
-private _amount 	= parseNumber _amountEdit;
-private _time 		= parseNumber _timeEdit;
+if (isNil "CBA_common") then {
+	HZ_amount 			= parseNumber (ctrlText ((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5901));
+	HZ_timeLimit		= parseNumber (ctrlText ((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5902));
+	HZ_Simu 			= cbChecked ((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5906);
+	HZ_ApplyVehicles	= cbChecked ((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5904);
+	HZ_ApplyAI			= cbChecked ((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5903);
+	HZ_CasingDetails 	= cbChecked ((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5905);
+};
 
-HZ_ServerControllingSettings = isServer && _simu;
-publicVariable "HZ_ServerControllingSettings";
-
-profileNameSpace setVariable ["HZ_BC_Amount", _amount];
-profileNameSpace setVariable ["HZ_BC_Time", (_time * 60)];
-profileNameSpace setVariable ["HZ_BC_AI", _AI];
-profileNameSpace setVariable ["HZ_BC_Vehicles", _vehicles];
-profileNameSpace setVariable ["HZ_BC_Details", _details];
-profileNameSpace setVariable ["HZ_BC_Sim", _simu];
+profileNameSpace setVariable ["HZ_BC_Amount", HZ_amount];
+profileNameSpace setVariable ["HZ_BC_Time", (HZ_timeLimit * 60)];
+profileNameSpace setVariable ["HZ_BC_Sim", HZ_Simu];
+profileNameSpace setVariable ["HZ_BC_Vehicles", HZ_ApplyVehicles];
+profileNameSpace setVariable ["HZ_BC_AI", HZ_ApplyAI];
+profileNameSpace setVariable ["HZ_BC_Details", HZ_CasingDetails];
 saveProfileNameSpace;
 
-HZ_CasingDetails 	= profileNameSpace getVariable ["HZ_BC_Details", false];
-HZ_amount 			= profileNameSpace getVariable ["HZ_BC_Amount", 500];
-HZ_timeLimit 		= profileNameSpace getVariable ["HZ_BC_Time", 5 * 10];
-HZ_ApplyAI 			= profileNameSpace getVariable ["HZ_BC_AI", true];
-HZ_ApplyVehicles 	= profileNameSpace getVariable ["HZ_BC_Vehicles", true];
-HZ_Simu 			= profileNameSpace getVariable ["HZ_BC_Sim", false];
+HZ_ServerControllingSettings = isServer && HZ_Simu;
+publicVariable "HZ_ServerControllingSettings";
 
 if (HZ_ServerControllingSettings) then {
 	if (isServer) then {

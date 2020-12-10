@@ -1,31 +1,29 @@
 /*
-	Author: Hortzy
-	Edited by: Nicoman
-	Function: HZ_fnc_Cleanup
-	Version: 1.0
-	Edited Date: 11/26/2020
+	Author: 		Hortzy
+	Edited by: 		Nicoman
+	Function: 		HZ_fnc_Cleanup
+	Version: 		1.0
+	Edited Date: 	12/10/2020
 	
 	Description:
-	Monitors casings for cleanup
-
+		Monitors casings for cleanup
+	
 	Parameters:
 		None
-
+	
 	Returns:
-	NONE
+		NONE
 */
 
-private ["_timeNow", "_index", "_casing", "_timestamp", "_count", "_timeWait"];
- 
-HZ_DoCleanup = true;
-while {HZ_DoCleanup} do {
-	_timeNow = time;
+private ["_index", "_casing", "_timestamp", "_count", "_timeWait"];
+
+while {true} do {
 	_index = 0;
 	HZ_BulletCasings_World apply {
 		_casing = _x select 0;
 		_timestamp = _x select 1;
 		_count = count HZ_BulletCasings_World;
-		if ((_timeNow > (_timestamp + HZ_timeLimit)) ||
+		if ((time > (_timestamp + HZ_timeLimit)) ||
 			(_count > HZ_amount) ||
 			HZ_BulletCasingsRefresh
 		) then {

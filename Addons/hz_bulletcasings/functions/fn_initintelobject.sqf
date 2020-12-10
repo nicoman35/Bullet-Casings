@@ -1,15 +1,17 @@
 /*
-	Author: Karel Moricky
-	Edited by: Hortzy, Nicoman
+	Author: 		Karel Moricky
+	Edited by: 		Hortzy, Nicoman
+	Function: 		HZ_fnc_initIntelObject
+	Edited Date: 	12/10/2020
+	
 	Description:
-	Init intel object.
-	It will add "Take" action on it.
-
+		Init intel object. It will add "Take" action to it.
+	
 	Parameter(s):
-	NONE
-
+		NONE
+	
 	Returns:
-	BOOL
+		BOOL
 */
 
 private _mode = _this param [1, "init", [""]];
