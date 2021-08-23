@@ -8,8 +8,7 @@
 	{
 		profileNameSpace setVariable ["HZ_BC_Amount", HZ_amount];
 		saveProfileNameSpace;
-		// diag_log formatText ["%1%2%3%4%5", time, "s  (fnc_BulletCaseInit) HZ_amount: ", HZ_amount];
-	}																											// code executed on setting change
+	}																											// code that will be executed 1. on mission start and 2. every time the setting is changed
 ] call CBA_fnc_addSetting;
 [
 	"HZ_timeLimit_XEH",
@@ -22,7 +21,6 @@
 		HZ_timeLimit = HZ_timeLimit_XEH * 60;
 		profileNameSpace setVariable ["HZ_BC_Time", HZ_timeLimit];
 		saveProfileNameSpace;
-		// diag_log formatText ["%1%2%3%4%5", time, "s  (fnc_BulletCaseInit) HZ_timeLimit: ", HZ_timeLimit, ", HZ_timeLimit_XEH: ", HZ_timeLimit_XEH];
 	}
 ] call CBA_fnc_addSetting;
 [
@@ -35,7 +33,6 @@
 	{
 		profileNameSpace setVariable ["HZ_BC_Sim", HZ_Simu];
 		saveProfileNameSpace;
-		// diag_log formatText ["%1%2%3%4%5", time, "s  (fnc_BulletCaseInit) HZ_Simu: ", HZ_Simu];
 	}
 ] call CBA_fnc_addSetting;
 [
@@ -48,7 +45,6 @@
 	{
 		profileNameSpace setVariable ["HZ_BC_Vehicles", HZ_ApplyVehicles];
 		saveProfileNameSpace;
-		// diag_log formatText ["%1%2%3%4%5", time, "s  (fnc_BulletCaseInit) HZ_ApplyVehicles: ", HZ_ApplyVehicles];
 	}
 ] call CBA_fnc_addSetting;
 [
@@ -59,10 +55,8 @@
 	false,
     true,
 	{
-		// diag_log formatText ["%1%2%3%4%5", time, "s  (XEH) HZ_ApplyAI: ", HZ_ApplyAI];
 		profileNameSpace setVariable ["HZ_BC_AI", HZ_ApplyAI];
 		saveProfileNameSpace;
-		// diag_log formatText ["%1%2%3%4%5", time, "s  (fnc_BulletCaseInit) HZ_ApplyAI: ", HZ_ApplyAI];
 	}
 ] call CBA_fnc_addSetting;
 [
@@ -75,6 +69,24 @@
 	{
 		profileNameSpace setVariable ["HZ_BC_Details", HZ_CasingDetails];
 		saveProfileNameSpace;
-		// diag_log formatText ["%1%2%3%4%5", time, "s  (fnc_BulletCaseInit) HZ_CasingDetails: ", HZ_CasingDetails];
 	}
+] call CBA_fnc_addSetting;
+// [
+	// "HZ_CasingClearReset",
+    // "CHECKBOX",
+	// ["Clear/Refresh", "This will delete all current casings, and if enabled for AI it will check for new units to apply casings."],
+	// "Bullet Casings",
+	// false,
+    // true,
+	// {
+		// if (HZ_CasingClearReset) then {!HZ_CasingClearReset};
+	// }
+// ] call CBA_fnc_addSetting;
+[
+	"HZ_LoopWait",
+	"SLIDER",
+	["Cleanup Loop Time", "Interval time in seconds; every x seconds a check is run for casing removal."],
+	"Bullet Casings",
+	[1, 20, 5, 0],
+	true
 ] call CBA_fnc_addSetting;

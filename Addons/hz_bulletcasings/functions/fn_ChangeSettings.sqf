@@ -17,7 +17,9 @@
 
 if (isNil "CBA_common") then {
 	HZ_amount 			= parseNumber (ctrlText ((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5901));
-	HZ_timeLimit		= parseNumber (ctrlText ((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5902));
+	HZ_timeLimit		= 60 * (parseNumber (ctrlText ((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5902)));
+	if (HZ_timeLimit < 60) then {HZ_timeLimit = 60};
+	if (HZ_timeLimit > 3600) then {HZ_timeLimit = 3600};
 	HZ_Simu 			= cbChecked ((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5906);
 	HZ_ApplyVehicles	= cbChecked ((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5904);
 	HZ_ApplyAI			= cbChecked ((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5903);
@@ -25,7 +27,8 @@ if (isNil "CBA_common") then {
 };
 
 profileNameSpace setVariable ["HZ_BC_Amount", HZ_amount];
-profileNameSpace setVariable ["HZ_BC_Time", (HZ_timeLimit * 60)];
+// profileNameSpace setVariable ["HZ_BC_Time", (HZ_timeLimit * 60)];
+profileNameSpace setVariable ["HZ_BC_Time", HZ_timeLimit];
 profileNameSpace setVariable ["HZ_BC_Sim", HZ_Simu];
 profileNameSpace setVariable ["HZ_BC_Vehicles", HZ_ApplyVehicles];
 profileNameSpace setVariable ["HZ_BC_AI", HZ_ApplyAI];

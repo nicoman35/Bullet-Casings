@@ -3,7 +3,7 @@
 	Edited by: 		Nicoman
 	Function: 		HZ_fnc_OpenSettings
 	Version: 		1.0
-	Edited Date: 	12/10/2020
+	Edited Date: 	12/11/2020
 	
 	Description:
 		Opens the Bullet Casing Settings
@@ -12,7 +12,7 @@
 		None
 	
 	Returns:
-		True if successful
+		None
 */
 
 private _handle = createDialog "HZ_Bulletcasings_Settings";
@@ -29,7 +29,7 @@ publicVariable "HZ_ServerControllingSettings";
 
 if (isNil "CBA_common") then {
 	((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5901) CtrlSetText format ["%1", HZ_amount];
-	((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5902) CtrlSetText format ["%1", HZ_timeLimit];
+	((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5902) CtrlSetText format ["%1", HZ_timeLimit / 60];
 	((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5906) cbSetChecked HZ_Simu;
 	((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5903) cbSetChecked HZ_ApplyAI;
 	((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5904) cbSetChecked HZ_ApplyVehicles;
@@ -39,5 +39,3 @@ if (isNil "CBA_common") then {
 	((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5906) ctrlSetToolTip format["This allows casings to be simulated. (Interact with the terrain). \n1: Only the Server or Host can control this setting. \n2: When enabled, Server/Host controls all settings. \n3: Visit the workshop page for more details.", _time];
 if (HZ_isClient) then {((uiNamespace getVariable 'HZ_Bulletcasings_Settings')displayCtrl 5906) cbSetChecked HZ_ServerControllingSettings;};
 };
-
-true

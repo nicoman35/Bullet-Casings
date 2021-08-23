@@ -1,13 +1,12 @@
-
 dir = "hz_bulletcasings";
 hidePicture = 0;
 hideName = 0;
-name = "Bullet Casings";
+name = "Bullet Casings v1.1";
 author = "Hortzy";
 logoOver = "BC.paa";
 logo = "BC.paa";
 picture = "BC.paa";
-overview = "Simply adds bullet casings to the ground for fired rounds";
+overview = "Simply adds bullet casings to the ground for fired rounds. v1.1 Edited by Nicoman. CBA functionality added.";
 actionName = "Workshop Page";
 action = "https://steamcommunity.com/sharedfiles/filedetails/?id=606289254";
-version = 1.0;
+version = 1.1;

@@ -82,38 +82,35 @@ private _unitPosition = getPosATLVisual _unit;
 
 	_casing hideObject true;
 	_casing allowDamage false;
-	private _newPos = getPosATLVisual _casing;
-
-	_casing setVehiclePosition [_newPos vectorAdd [0, 0, 0.1], [], 0, "CAN_COLLIDE"];
-
+	private _casingPosATLV = getPosATLVisual _casing;
+	_casing setVehiclePosition [_casingPosATLV vectorAdd [0, 0, 0.1], [], 0, "CAN_COLLIDE"];
 	_casing setDir random 360;
 	_casing setVectorUp [0,0,1];
-	private _newPos2 = getPosASL _casing;
-	private _newPos3 = getPosATL _casing;
-	private _newPos4 = getPos _casing;
+	private _casingPosASL = getPosASL _casing;
+	private _casingPosATL = getPosATL _casing;
+	private _casingPos = getPos _casing;
 	deleteVehicle _casing;
 
-	if (!HZ_ServerControllingSettings) then {					// Do Local casing
+	if (!HZ_ServerControllingSettings) then {											// Do Local casing
 		private _onTerrain = false;
 		private _offset = 0;
-		if ((_newPos3 select 2) <= 0.001) then {				// On Terrain Surface
+		if ((_casingPosATL select 2) <= 0.001) then {									// On Terrain Surface
 			_onTerrain = true;
 			_offset = 0.01125;
-		} else {												// On Object Surface
+		} else {																		// On Object Surface
 			_onTerrain = false;
 			_offset = 0.02;
-			if ((_newPos4 select 2) >= 0.00001) then {
+			if ((_casingPos select 2) >= 0.00001) then {
 				_offset = -0.0155;
 			};
 		};
-		_casing = createSimpleObject [_cartridgeNew, _newPos2 vectorAdd [0, 0, _offset], true];
+		_casing = createSimpleObject [_cartridgeNew, _casingPosASL vectorAdd [0, 0, _offset], true];
 		_casing setDir random 360;
 		if (_onTerrain) then {_casing setVectorUp surfaceNormal position _casing} else {_casing setVectorUp [0, 0, 1]};
 	};
 	
-	if (HZ_ServerControllingSettings && isServer) then {		// Do Global casing
+	if (HZ_ServerControllingSettings && isServer) then {								// Do Global casing
 		_casingSpawnOffsetPos = _unit modelToWorld [0.5, 0, 0];
-		
 		if !(isNull _vehicle) then {
 			_casingSpawnOffsetPos = _vehicle modelToWorld [0.5, 1, 0];
 			_casingSpawnOffsetPos set [2, 0.01];
@@ -123,7 +120,7 @@ private _unitPosition = getPosATLVisual _unit;
 		_casing setDir random 360;
 		_casing setVectorUp [0, 0, 1];
 		if !(isNull _vehicle) then {
-			[_casing, _vehicle] remoteExecCall ["disableCollisionWith", 0, _casing];
+			[_casing, _vehicle] remoteExecCall ["disableCollisionWith", 0, _casing];	// is not working correctly due to glitchy "disableCollisionWith" command
 		};
 	};
 	

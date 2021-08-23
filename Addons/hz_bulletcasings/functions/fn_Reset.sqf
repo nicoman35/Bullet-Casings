@@ -3,7 +3,7 @@
 	Edited by: 		Nicoman
 	Function: 		HZ_fnc_Reset
 	Version: 		1.0
-	Edited Date: 	12/10/2020
+	Edited Date: 	12/11/2020
 	
 	Description:
 		Deletes all casings, checks for new units to apply casings to.
@@ -15,7 +15,9 @@
 		NONE
 */
 
+HZ_BulletCasings_World = HZ_BulletCasings_World select {!isNull (_x select 0)};  // delete any non existing bullet cases from array
 private _casingCount = count HZ_BulletCasings_World;
+
 if (HZ_ServerControllingSettings) then {
 	if (isServer) then {
 		systemChat '(HOST/SERVER) System Message: Working on Task... Please Wait....';

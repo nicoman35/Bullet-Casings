@@ -9,12 +9,12 @@
 		Initializes the Bullet Cassings EventHandler
 	
 	Parameters:
-		_this select 0: OBJECT - Unit
+		_this: OBJECT - Unit
 	
 	Returns:
 		True if successful
 */
-	
+
 private _unit = _this;
 
 if (_unit getVariable ["BulletCasingsEnabled", nil]) exitWith {

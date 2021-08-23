@@ -3,7 +3,7 @@
 	Edited by: 		Nicoman
 	Function: 		HZ_fnc_BulletCaseInit
 	Version: 		1.0
-	Edited Date: 	12/10/2020
+	Edited Date: 	12/11/2020
 	
 	Description:
 		Initializes the Bullet Casing Mod
@@ -41,27 +41,8 @@ if (isServer) then {			//Server
 
 if (isDedicated || !hasInterface) exitWith {};
 
-private _ex = [] spawn { 
-	private [
-		"_data", 
-		"_proectile", 
-		"_cartridge", 
-		"_weapon", 
-		"_sideD", 
-		"_side", 
-		"_origin", 
-		"_timestamp", 
-		"_date",
-		"_time", 
-		// "_biometrics", 
-		"_name", 
-		"_weaponDisplayName",
-		"_text", 
-		"_picture", 
-		"_ty",
-		"_positionCasing"
-	];
-	
+[] spawn {
+
 	if (isServer) then {HZ_isHost = true;};
 	HZ_amount 			= profileNameSpace getVariable ["HZ_BC_Amount", 500];
 	HZ_timeLimit 		= profileNameSpace getVariable ["HZ_BC_Time", 5 * 60];
@@ -78,6 +59,23 @@ private _ex = [] spawn {
 		<font color='#CC0000'><execute expression = 'call HZ_fnc_OpenSettings'>**Configure**</execute></font>")]];
 	};
 	waitUntil {CursorObject isKindof "HZ_FxCartridge"};
+	
+	private [
+		"_data", 
+		"_proectile",
+		"_cartridge",
+		"_weapon",
+		"_side",
+		"_origin",
+		"_timestamp",
+		"_date",
+		"_time",
+		"_name",
+		"_weaponDisplayName",
+		"_text",
+		"_picture",
+		"_positionCasing"
+	];
 	
 	HZ_keyDownEHId = (findDisplay 46) displayAddEventHandler ["KeyDown", {
 		params ["_displayorcontrol", "_key", "_shift", "_ctrl", "_alt"];
@@ -116,8 +114,7 @@ private _ex = [] spawn {
 		_picture = getText (configFile >> "CfgVehicles" >> _cartridge >> "picture");
 		CursorObject setVariable ["RscAttributeDiaryRecord_texture", _picture, false];
 		[CursorObject, "RscAttributeDiaryRecord", ["Cartridges", _text, _picture]] call BIS_fnc_setServerVariable;
-		_ty = [CursorObject, player, -1, []];
-		[_ty, "action"] spawn HZ_fnc_initIntelObject;
+		[[CursorObject, player], "action"] spawn HZ_fnc_initIntelObject;
 	}];
 	
 	addMissionEventHandler ["Draw3D", {
@@ -136,5 +133,5 @@ private _ex = [] spawn {
 	
 	if (HZ_ServerControllingSettings) exitWith {};
 	allUnits apply {_x call HZ_fnc_BulletCases};
-	private _cleanupLoop = [] spawn HZ_fnc_Cleanup;
+	[] spawn HZ_fnc_Cleanup;
 };

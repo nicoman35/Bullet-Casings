@@ -82,7 +82,7 @@ class HZ_Bulletcasings_Settings {
 		};
 		class RscBulletcasings_AmountEdit: RscEdit {
 			idc 	= 5901;
-			text 	= "100";
+			text 	= "500";
 			x 		= 0.494844 * safezoneW + safezoneX;
 			y 		= 0.335 * safezoneH + safezoneY;
 			w 		= 0.0567187 * safezoneW;
@@ -91,7 +91,7 @@ class HZ_Bulletcasings_Settings {
 		};
 		class RscBulletcasings_TimeEdit: RscEdit {
 			idc 	= 5902;
-			text 	= "60*10";
+			text 	= "5";
 			x 		= 0.494844 * safezoneW + safezoneX;
 			y 		= 0.357 * safezoneH + safezoneY;
 			w 		= 0.0567187 * safezoneW;
